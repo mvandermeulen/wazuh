@@ -929,10 +929,16 @@ cJSON * fim_json_event(char * file_name, fim_entry_data * old_data, fim_entry_da
     cJSON_AddNumberToObject(data, "timestamp", new_data->last_event);
 
 #ifndef WIN32
+    fim_entry_data * aux_data = NULL;
     if (new_data != NULL) {
+        aux_data = new_data;
+    } else if (old_data != NULL) {
+        aux_data = old_data;
+    }
+    if (aux_data != NULL) {
         char** paths = NULL;
 
-        if(paths = fim_db_get_paths_from_inode(syscheck.database, new_data->inode, new_data->dev), paths){
+        if(paths = fim_db_get_paths_from_inode(syscheck.database, aux_data->inode, aux_data->dev), paths){
             if(paths[0] && paths[1]){
                 cJSON *hard_links = cJSON_CreateArray();
                 int i;

@@ -951,7 +951,7 @@ int fim_db_insert(fdb_t *fim_sql, const char *file_path, fim_entry_data *new, fi
                     fim_db_force_commit(fim_sql);
                 }
             }
-        } else {
+        } else if (res != SQLITE_DONE) {
             merror("SQL ERROR: (%d)%s", res, sqlite3_errmsg(fim_sql->db));
             return FIMDB_ERR;
         }
